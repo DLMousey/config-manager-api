@@ -25,5 +25,11 @@ namespace ConfigManager.Services.Implementation
         {
             return await _context.Hosts.FindAsync(id);
         }
+
+        public async Task Create(Host host)
+        {
+            await _context.AddAsync(host);
+            await _context.SaveChangesAsync();
+        }
     }
 }

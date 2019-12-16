@@ -10,5 +10,7 @@ namespace ConfigManager.Services.Interfaces
         Task<List<Host>> FindAll();
 
         Task<Host> Find(Guid id);
+
+        Task Create(Host host);
     }
 }

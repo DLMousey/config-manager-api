@@ -91,5 +91,21 @@ namespace ConfigManager.Controllers
 
             return Ok(host);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Host host)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _hostService.Create(host);
+            return new ObjectResult(new {
+                status = 201,
+                mesasge = "Host created successfully",
+                data = host
+            });
+        }
     }
 }
