@@ -22,6 +22,13 @@ namespace ConfigManager.Services.Implementation
             
             Links.Add(new HateoasExtension
             {
+                Href = context.Request.PathBase + "/hosts",
+                Rel = "List",
+                Method = "GET"
+            });
+            
+            Links.Add(new HateoasExtension
+            {
                 Href = context.Request.PathBase + "/hosts/" + host.Id,
                 Rel = "Detail",
                 Method = "GET"

@@ -66,10 +66,30 @@ namespace ConfigManager.Controllers
             
                 return Ok(hostViewModels);
             }
-            else
+
+            return Ok(hosts);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] Guid id, [FromHeader(Name = "Accept")] String accept)
+        {
+            Host host = await _hostService.Find(id);
+
+            if (host == null)
             {
-                return Ok(hosts);
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "No record found matching id: " + id.ToString()
+                });
             }
+
+            if (accept.Contains("hateoas"))
+            {
+                return Ok(host.ToViewModel(_hateoasService.GenerateHostLinks(host)));
+            }
+
+            return Ok(host);
         }
     }
 }
