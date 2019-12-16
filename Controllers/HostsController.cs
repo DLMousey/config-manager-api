@@ -21,6 +21,25 @@ namespace ConfigManager.Controllers
             _hostService = hostService;
             _hateoasService = hateoasService;
         }
+
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            List<object> endpoints = new List<object>();
+            
+            endpoints.Add(new { Uri = "/", Method = "GET", Description = "Retrieve a list of hosts" });
+            endpoints.Add(new { Uri = "/:id", Method = "GET", Description = "Retrieve detail on a specific host"});
+            endpoints.Add(new { Uri = "/", Method = "POST", Description = "Create a new host"});
+            endpoints.Add(new { Uri = "/:id", Method = "PUT", Description = "Update an existing host"});
+            endpoints.Add(new { Uri = "/:id", Method = "DELETE", Description = "Delete an existing host"});
+
+            return Ok(new
+            {
+                status = 200,
+                message = "Available endpoints at /hosts",
+                data = endpoints
+            });
+        }
         
         [HttpGet]
         public async Task<IActionResult> GetList([FromHeader(Name = "Accept")] String accept)
